@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\ItemGroup;
 use App\Models\ItemType;
 use App\Models\Location;
 use Illuminate\Database\Migrations\Migration;
@@ -14,13 +13,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('items', function (Blueprint $table) {
+        Schema::create('item_groups', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignIdFor(ItemGroup::class)->constrained()->onDelete('cascade');
-            $table->string('serial_number')->nullable();
-            $table->string('part_number')->nullable();
-            $table->string('self_location')->nullable();
-            $table->string('status');
+            $table->string('name');
+            $table->mediumText('description')->nullable();
+            $table->foreignIdFor(ItemType::class);
+            $table->integer('count')->default(0);
+            $table->foreignIdFor(Location::class);
+            $table->string('image')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('items');
+        Schema::dropIfExists('item_groups');
     }
 };

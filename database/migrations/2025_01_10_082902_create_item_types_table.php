@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('icon')->nullable();
             $table->boolean('is_handled_by_individually')->default(false);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

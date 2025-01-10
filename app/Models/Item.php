@@ -6,22 +6,17 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Item extends Model
 {
-    use HasUuids;
+    use HasUuids, SoftDeletes;
 
     protected $guarded = [];
 
-    
-    public function location(): BelongsTo  
-    {
-        return $this->belongsTo(Location::class);
-    }
 
-    public function itemType(): BelongsTo
+    public function group(): BelongsTo
     {
-        return $this->belongsTo(ItemType::class);
+        return $this->belongsTo(ItemGroup::class);
     }
-
 }
