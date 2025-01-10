@@ -7,6 +7,7 @@ use App\Filament\Resources\ItemTypeResource\RelationManagers;
 use App\Models\ItemType;
 use Filament\Forms;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -34,13 +35,14 @@ class ItemTypeResource extends Resource
                     ->required()
                     ->maxLength(255)
                     ->unique(ignoreRecord: true),
+                Toggle::make('is_handled_by_individually'),
                 IconPicker::make('icon')
                     ->columns([
                         'default' => 1,
                         'lg' => 3,
                         '2xl' => 5,
                     ])
-            ]);
+            ])->columns(1);
     }
 
     public static function table(Table $table): Table

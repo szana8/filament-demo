@@ -18,7 +18,8 @@ return new class extends Migration
             $table->string('name');
             $table->mediumText('description')->nullable();
             $table->string('serial_number')->nullable();
-            $table->string('part_number')->nullable();            
+            $table->string('part_number')->nullable();
+            $table->integer('count')->default(0);
             $table->foreignIdFor(ItemType::class);
             $table->string('self_location')->nullable();
             $table->string('assignee')->nullable();

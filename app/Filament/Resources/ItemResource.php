@@ -15,6 +15,7 @@ use Filament\Infolists\Components\TextEntry;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 
 class ItemResource extends Resource
@@ -128,7 +129,9 @@ class ItemResource extends Resource
                         ->close()
                         ->color('gray')
 
-                    ])->modalHeading(fn (Item $record): ?string => Str::limit($record->description, 20, '...')),
+                    ])
+                    ->modalHeading(fn (Item $record): ?string => Str::limit($record->name, 20, '...'))
+                    ->modalDescription(fn (Item $record): ?string => Str::limit($record->description, 50, '...')),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
