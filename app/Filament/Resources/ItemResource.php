@@ -4,12 +4,14 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\ItemResource\Pages;
 use App\Models\Item;
+use App\Models\ItemType;
 use Filament\Actions\StaticAction;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
 use Filament\Infolists\Components\ImageEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Resources\Resource;
@@ -46,7 +48,12 @@ class ItemResource extends Resource
                         Select::make('item_type_id')
                             ->relationship('itemType', 'name')
                             ->preload()
+                            ->live()
                             ->required(),
+                        TextInput::make('count')
+                            ->numeric()
+                            ->inputMode('decimal')
+                            ->hidden(fn (Get $get) => ItemType::query()->where('id', '=',  $get('item_type_id'))->first()?->is_handled_by_individually),
                         Select::make('status')
                             ->required()
                             ->options([
