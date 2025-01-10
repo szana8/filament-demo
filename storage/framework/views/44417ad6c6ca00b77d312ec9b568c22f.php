@@ -90,8 +90,10 @@ unset($__defined_vars); ?>
 
 <?php
     $hasDescription = filled($description);
+    $hasFooter = (! \Filament\Support\is_slot_empty($footer)) || (is_array($footerActions) && count($footerActions)) || (! is_array($footerActions) && (! \Filament\Support\is_slot_empty($footerActions)));
     $hasHeading = filled($heading);
     $hasIcon = filled($icon);
+    $hasSlot = ! \Filament\Support\is_slot_empty($slot);
 
     if (! $alignment instanceof Alignment) {
         $alignment = filled($alignment) ? (Alignment::tryFrom($alignment) ?? $alignment) : null;
@@ -268,6 +270,7 @@ unset($__defined_vars); ?>
                         <div
                             class="<?php echo \Illuminate\Support\Arr::toCssClasses([
                                 'fi-modal-header flex px-6 pt-6',
+                                'pb-6' => (! $hasSlot) && (! $hasFooter),
                                 'fi-sticky sticky top-0 z-10 border-b border-gray-200 bg-white pb-6 dark:border-white/10 dark:bg-gray-900' => $stickyHeader,
                                 'rounded-t-xl' => $stickyHeader && ! ($slideOver || ($width === MaxWidth::Screen)),
                                 match ($alignment) {
@@ -384,14 +387,20 @@ unset($__defined_vars); ?>
                                 >
                                     <?php if (isset($component)) { $__componentOriginald7a9f81547afa3e8c64344ab5afc13c2 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginald7a9f81547afa3e8c64344ab5afc13c2 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'filament::components.modal.heading','data' => []] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'filament::components.modal.heading','data' => ['class' => \Illuminate\Support\Arr::toCssClasses([
+                                            'me-6' => $closeButton && ((! $hasIcon) || in_array($alignment, [Alignment::Start, Alignment::Left])),
+                                            'ms-6' => $closeButton && (! $hasIcon) && ($alignment === Alignment::Center),
+                                        ])]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('filament::modal.heading'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes([]); ?>
+<?php $component->withAttributes(['class' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(\Illuminate\Support\Arr::toCssClasses([
+                                            'me-6' => $closeButton && ((! $hasIcon) || in_array($alignment, [Alignment::Start, Alignment::Left])),
+                                            'ms-6' => $closeButton && (! $hasIcon) && ($alignment === Alignment::Center),
+                                        ]))]); ?>
                                         <?php echo e($heading); ?>
 
                                      <?php echo $__env->renderComponent(); ?>
@@ -434,7 +443,7 @@ unset($__defined_vars); ?>
                         </div>
                     <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
 
-                    <!--[if BLOCK]><![endif]--><?php if(! \Filament\Support\is_slot_empty($slot)): ?>
+                    <!--[if BLOCK]><![endif]--><?php if($hasSlot): ?>
                         <div
                             class="<?php echo \Illuminate\Support\Arr::toCssClasses([
                                 'fi-modal-content flex flex-col gap-y-4 py-6',
@@ -448,7 +457,7 @@ unset($__defined_vars); ?>
                         </div>
                     <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
 
-                    <!--[if BLOCK]><![endif]--><?php if((! \Filament\Support\is_slot_empty($footer)) || (is_array($footerActions) && count($footerActions)) || (! is_array($footerActions) && (! \Filament\Support\is_slot_empty($footerActions)))): ?>
+                    <!--[if BLOCK]><![endif]--><?php if($hasFooter): ?>
                         <div
                             class="<?php echo \Illuminate\Support\Arr::toCssClasses([
                                 'fi-modal-footer w-full',
@@ -457,7 +466,7 @@ unset($__defined_vars); ?>
                                 'fi-sticky sticky bottom-0 border-t border-gray-200 bg-white py-5 dark:border-white/10 dark:bg-gray-900' => $stickyFooter,
                                 'rounded-b-xl' => $stickyFooter && ! ($slideOver || ($width === MaxWidth::Screen)),
                                 'pb-6' => ! $stickyFooter,
-                                'mt-6' => (! $stickyFooter) && \Filament\Support\is_slot_empty($slot),
+                                'mt-6' => (! $stickyFooter) && (! $hasSlot),
                                 'mt-auto' => $slideOver,
                             ]); ?>"
                         >

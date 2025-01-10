@@ -10,6 +10,7 @@
     use Illuminate\Support\Str;
 
     $actions = $getActions();
+    $flatActionsCount = count($getFlatActions());
     $actionsAlignment = $getActionsAlignment();
     $actionsPosition = $getActionsPosition();
     $actionsColumnLabel = $getActionsColumnLabel();
@@ -1318,7 +1319,10 @@
 <?php unset($__componentOriginalc946417715b60679750e91f5abf4cc2e); ?>
 <?php endif; ?>
                                 <?php else: ?>
-                                    <th class="w-1"></th>
+                                    <th
+                                        aria-label="<?php echo e(trans_choice('filament-tables::table.columns.actions.label', $flatActionsCount)); ?>"
+                                        class="fi-ta-actions-header-cell w-1"
+                                    ></th>
                                 <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
                             <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
 
@@ -1414,7 +1418,10 @@
 <?php unset($__componentOriginalc946417715b60679750e91f5abf4cc2e); ?>
 <?php endif; ?>
                                 <?php else: ?>
-                                    <th class="w-1"></th>
+                                    <th
+                                        aria-label="<?php echo e(trans_choice('filament-tables::table.columns.actions.label', $flatActionsCount)); ?>"
+                                        class="fi-ta-actions-header-cell w-1"
+                                    ></th>
                                 <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
                             <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
                         <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
@@ -1431,7 +1438,6 @@
                                         ->class([
                                             'fi-table-header-cell-' . str($column->getName())->camel()->kebab(),
                                             'w-full' => blank($columnWidth) && $column->canGrow(default: false),
-                                            '[&:not(:first-of-type)]:border-s [&:not(:last-of-type)]:border-e border-gray-200 dark:border-white/5' => $column->getGroup(),
                                             $getHiddenClasses($column),
                                         ])
                                         ->style([
@@ -1449,7 +1455,6 @@
                                         ->class([
                                             'fi-table-header-cell-' . str($column->getName())->camel()->kebab(),
                                             'w-full' => blank($columnWidth) && $column->canGrow(default: false),
-                                            '[&:not(:first-of-type)]:border-s [&:not(:last-of-type)]:border-e border-gray-200 dark:border-white/5' => $column->getGroup(),
                                             $getHiddenClasses($column),
                                         ])
                                         ->style([
@@ -1496,7 +1501,10 @@
 <?php unset($__componentOriginalc946417715b60679750e91f5abf4cc2e); ?>
 <?php endif; ?>
                                 <?php else: ?>
-                                    <th class="w-1"></th>
+                                    <th
+                                        aria-label="<?php echo e(trans_choice('filament-tables::table.columns.actions.label', $flatActionsCount)); ?>"
+                                        class="fi-ta-actions-header-cell w-1"
+                                    ></th>
                                 <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
                             <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
 
@@ -1592,7 +1600,10 @@
 <?php unset($__componentOriginalc946417715b60679750e91f5abf4cc2e); ?>
 <?php endif; ?>
                                 <?php else: ?>
-                                    <th class="w-1"></th>
+                                    <th
+                                        aria-label="<?php echo e(trans_choice('filament-tables::table.columns.actions.label', $flatActionsCount)); ?>"
+                                        class="fi-ta-actions-header-cell w-1"
+                                    ></th>
                                 <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
                             <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
                         <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
@@ -1626,7 +1637,7 @@
 <?php if (isset($attributes)) { $__attributesOriginal0582040fe960eff09c1461f7f86a8187 = $attributes; } ?>
 <?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'filament-tables::components.cell','data' => ['class' => \Illuminate\Support\Arr::toCssClasses([
                                         'fi-table-individual-search-cell-' . str($column->getName())->camel()->kebab(),
-                                        'px-3 py-2',
+                                        'min-w-48 px-3 py-2',
                                     ])]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('filament-tables::cell'); ?>
 <?php if ($component->shouldRender()): ?>
@@ -1636,7 +1647,7 @@
 <?php endif; ?>
 <?php $component->withAttributes(['class' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(\Illuminate\Support\Arr::toCssClasses([
                                         'fi-table-individual-search-cell-' . str($column->getName())->camel()->kebab(),
-                                        'px-3 py-2',
+                                        'min-w-48 px-3 py-2',
                                     ]))]); ?>
                                     <!--[if BLOCK]><![endif]--><?php if($column->isIndividuallySearchable()): ?>
                                         <?php if (isset($component)) { $__componentOriginal7ccc00a3eaa8946ec9c0ec17f5ab229b = $component; } ?>

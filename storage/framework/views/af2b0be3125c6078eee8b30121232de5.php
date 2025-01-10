@@ -326,7 +326,11 @@ unset($__defined_vars); ?>
         <?php endif; ?>
 
         <div
-            x-persist="topbar.end"
+            <?php if(filament()->hasTenancy()): ?>
+                x-persist="topbar.end.tenant-<?php echo e(filament()->getTenant()?->getKey()); ?>"
+            <?php else: ?>
+                x-persist="topbar.end"
+            <?php endif; ?>
             class="ms-auto flex items-center gap-x-4"
         >
             <?php echo e(\Filament\Support\Facades\FilamentView::renderHook(\Filament\View\PanelsRenderHook::GLOBAL_SEARCH_BEFORE)); ?>
@@ -360,7 +364,9 @@ if (isset($__slots)) unset($__slots);
 $__split = function ($name, $params = []) {
     return [$name, $params];
 };
-[$__name, $__params] = $__split(Filament\Livewire\DatabaseNotifications::class, ['lazy' => true]);
+[$__name, $__params] = $__split(Filament\Livewire\DatabaseNotifications::class, [
+                        'lazy' => filament()->hasLazyLoadedDatabaseNotifications(),
+                    ]);
 
 $__html = app('livewire')->mount($__name, $__params, 'lw-3958574881-1', $__slots ?? [], get_defined_vars());
 

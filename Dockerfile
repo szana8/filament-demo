@@ -29,6 +29,7 @@ RUN chmod +x /usr/local/bin/install-php-extensions && sync && \
     mbstring  \
     pdo_mysql  \
     zip  \
+    intl \
     exif  \
     pcntl  \
     gd  \
@@ -45,9 +46,9 @@ RUN apt-get -y update \
     && docker-php-ext-install intl
 
 RUN curl https://getmic.ro | sh && \
-      mv micro /usr/local/bin/micro && \
-      micro -plugin install editorconfig && \
-      micro -plugin install filemanager
+    mv micro /usr/local/bin/micro && \
+    micro -plugin install editorconfig && \
+    micro -plugin install filemanager
 
 # Clear cache
 RUN apt-get clean
