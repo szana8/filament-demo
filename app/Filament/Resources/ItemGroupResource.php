@@ -3,10 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ItemGroupResource\Pages;
-use App\Filament\Resources\ItemGroupResource\RelationManagers;
-use App\Filament\Resources\ItemResource\Pages\CreateItem;
-use App\Filament\Resources\ItemResource\Pages\EditItem;
-use App\Filament\Resources\ItemResource\Pages\ListItems;
+use App\Filament\Resources\ItemResource\RelationManagers\ItemsRelationManager;
 use App\Models\ItemGroup;
 use App\Models\ItemType;
 use Filament\Forms;
@@ -31,7 +28,7 @@ class ItemGroupResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-inbox';
 
-    protected static ?string $navigationLabel = 'Item Group';
+    protected static ?string $navigationLabel = 'Items';
 
     protected static ?string $navigationGroup = 'Inventory';
 
@@ -86,15 +83,7 @@ class ItemGroupResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                \Filament\Tables\Actions\Action::make('Create Item')
-                    ->color('success')
-                    ->icon('heroicon-m-academic-cap')
-                    ->url(
-                        fn (ItemGroup $record): string => static::getUrl('items.create', [
-                            'parent' => $record->id,
-                        ])
-                    )->modalDescription('aadasd'),
+                //
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -106,7 +95,7 @@ class ItemGroupResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            ItemsRelationManager::class,
         ];
     }
 
@@ -116,12 +105,6 @@ class ItemGroupResource extends Resource
             'index' => Pages\ListItemGroups::route('/'),
             'create' => Pages\CreateItemGroup::route('/create'),
             'edit' => Pages\EditItemGroup::route('/{record}/edit'),
-
-            // Lessons 
-            'items.index' => ListItems::route('/{parent}/lessons'),
-            'items.create' => CreateItem::route('/{parent}/item/create'),
-            'items.edit' => EditItem::route('/{parent}/item/{record}/edit'),
-        
         ];
     }
 }
