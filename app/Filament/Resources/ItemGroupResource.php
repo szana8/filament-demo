@@ -40,9 +40,10 @@ class ItemGroupResource extends Resource
     {
         return $form
         ->schema([
-            \Filament\Forms\Components\Section::make('Main Information')
-                ->description('This section is about the main information of the item')
+            \Filament\Forms\Components\Section::make(fn (ItemGroup $record): ?string => Str::limit($record->name, 20, '...'))
+                ->description(fn (ItemGroup $record): ?string => Str::limit($record->description, 20, '...'))
                 ->collapsible()
+                ->collapsed(true)
                 ->schema([
                     FileUpload::make('image')
                         ->disk('public')
