@@ -4,14 +4,9 @@ namespace App\Filament\Resources\ItemGroupResource\Pages;
 
 use App\Filament\Resources\ItemGroupResource;
 use Filament\Actions;
-use Filament\Resources\Pages\CreateRecord;
+use Filament\Resources\Pages\ViewRecord;
 
-class CreateItemGroup extends CreateRecord
+class ViewItemGroup extends ViewRecord
 {
     protected static string $resource = ItemGroupResource::class;
-
-    protected function getRedirectUrl(): string
-    {
-        return $this->getResource()::getUrl('index');
-    }
 }

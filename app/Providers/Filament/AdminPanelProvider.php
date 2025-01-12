@@ -2,9 +2,12 @@
 
 namespace App\Providers\Filament;
 
+use App\Http\Middleware\AddUserInventoryMiddleware;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Navigation\NavigationGroup;
+use Filament\Navigation\NavigationItem;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
@@ -51,9 +54,17 @@ class AdminPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
+
+                AddUserInventoryMiddleware::class,
             ])
             ->authMiddleware([
                 Authenticate::class,
-            ]);
+            ])
+            ->navigationGroups([
+                NavigationGroup::make('Invnetory Items')
+                ->collapsible()
+                ->collapsed()
+            ])
+            ;
     }
 }

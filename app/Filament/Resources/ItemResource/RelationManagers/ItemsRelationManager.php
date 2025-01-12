@@ -2,8 +2,10 @@
 
 namespace App\Filament\Resources\ItemResource\RelationManagers;
 
+use App\Filament\Resources\ItemGroupResource\Pages\CreateItems;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -27,8 +29,17 @@ class ItemsRelationManager extends RelationManager
                 Forms\Components\TextInput::make('self_location')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('status')
-                    ->required()
+                Forms\Components\Select::make('status')
+                    ->options([
+                        'in_stock' => 'In Stock',
+                        'out_of_stock' => 'Out of Stock',
+                        'assigned' => 'Assigned',
+                        'damaged' => 'Damaged',
+                        'lost' => 'Lost',
+                    ])
+                    ->required(),
+                Forms\Components\TextInput::make('assignee')
+                    ->requiredIf('status', 'assigned')
                     ->maxLength(255),
             ]);
     }
@@ -44,7 +55,17 @@ class ItemsRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('self_location')
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('status')
+                Tables\Columns\SelectColumn::make('status')
+                    ->options([
+                        'in_stock' => 'In Stock',
+                        'out_of_stock' => 'Out of Stock',
+                        'assigned' => 'Assigned',
+                        'damaged' => 'Damaged',
+                        'lost' => 'Lost',
+                    ])
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('assignee')
                     ->searchable()
                     ->sortable(),
             ])

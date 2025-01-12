@@ -15,6 +15,7 @@ use Filament\Forms\Form;
 use Filament\Forms\Get;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\Summarizers\Count;
 use Filament\Tables\Table;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Builder;
@@ -28,9 +29,7 @@ class ItemGroupResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-inbox';
 
-    protected static ?string $navigationLabel = 'Items';
-
-    protected static ?string $navigationGroup = 'Inventory';
+    protected static ?string $navigationLabel = 'Item Groups';
 
     public static function getRecordTitle(?Model $record): string|null|Htmlable
     {
@@ -77,6 +76,13 @@ class ItemGroupResource extends Resource
                 Tables\Columns\TextColumn::make('name')
                     ->searchable()
                     ->description(fn (ItemGroup $record): ?string => Str::limit($record->description, 20, '...'))
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('items_count')
+                    ->label('In Stock')
+                    ->counts([
+                        'items' =>fn (Builder $query) => $query->where('status', 'in_stock'),
+                    ])
+                    ->searchable()
                     ->sortable(),
             ])
             ->filters([

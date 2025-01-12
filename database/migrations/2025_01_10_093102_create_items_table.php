@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('serial_number')->nullable();
             $table->string('part_number')->nullable();
             $table->string('self_location')->nullable();
+            $table->string('assignee')->nullable();
             $table->string('status');
             $table->timestamps();
             $table->softDeletes();
