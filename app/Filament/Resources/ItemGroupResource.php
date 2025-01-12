@@ -42,6 +42,7 @@ class ItemGroupResource extends Resource
         ->schema([
             \Filament\Forms\Components\Section::make('Main Information')
                 ->description('This section is about the main information of the item')
+                ->collapsible()
                 ->schema([
                     FileUpload::make('image')
                         ->disk('public')
