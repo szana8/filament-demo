@@ -55,14 +55,15 @@ class ItemsRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('self_location')
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\SelectColumn::make('status')
-                    ->options([
-                        'in_stock' => 'In Stock',
-                        'out_of_stock' => 'Out of Stock',
-                        'assigned' => 'Assigned',
-                        'damaged' => 'Damaged',
-                        'lost' => 'Lost',
-                    ])
+                Tables\Columns\TextColumn::make('status')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'in_stock' => 'success',
+                        'out_of_stock' => 'warning',
+                        'assigned' => 'info',
+                        'damaged' => 'danger',
+                        'lost' => 'gray',
+                    })
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('assignee')

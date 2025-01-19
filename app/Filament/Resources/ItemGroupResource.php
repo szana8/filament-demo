@@ -40,8 +40,8 @@ class ItemGroupResource extends Resource
     {
         return $form
         ->schema([
-            \Filament\Forms\Components\Section::make(fn (ItemGroup $record): ?string => Str::limit($record->name, 20, '...'))
-                ->description(fn (ItemGroup $record): ?string => Str::limit($record->description, 20, '...'))
+            \Filament\Forms\Components\Section::make(fn (ItemGroup|null $record): ?string => $record ? Str::limit($record->name, 20, '...') : 'Add new Item')
+                ->description(fn (ItemGroup|null $record): ?string => $record ? Str::limit($record->description, 20, '...') : 'Add new Item')
                 ->collapsible()
                 ->collapsed(true)
                 ->schema([
